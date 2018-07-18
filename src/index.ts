@@ -1,1 +1,1 @@
-import "./components/simple";
+import "./components/MyApplication";
