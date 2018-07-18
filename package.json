@@ -1,0 +1,15 @@
+{
+  "name": "whattheflow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Domenic Helfenstein",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "2.9.2"
+  }
+}
