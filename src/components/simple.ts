@@ -10,6 +10,7 @@ class MyApplication extends HTMLElement {
         wrapper.innerHTML = /*html*/`
             <style>
             :host {
+                color: blue;
             }
             </style>
             <h1>Web Component</h1>`;
