@@ -5,8 +5,14 @@ class MyApplication extends HTMLElement {
         super();
 
         var shadow = this.attachShadow({mode: 'open'});
-        var wrapper = document.createElement('span');
-        wrapper.innerText = "Dies ist eine Custom Web Component";
+        var wrapper = document.createElement('div');
+        
+        wrapper.innerHTML = /*html*/`
+            <style>
+            :host {
+            }
+            </style>
+            <h1>Web Component</h1>`;
         shadow.appendChild(wrapper);
     }
 }
