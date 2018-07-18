@@ -1,13 +1,10 @@
 export class MySimpleClass {
     DoSomething() {
-        const button = new HTMLButtonElement();
-        button.value = "Ich bin ein Button";
+        const button = document.createElement("BUTTON");
+        button.innerText = "Ich bin ein Button";
         
-        document.appendChild(
+        document.body.appendChild(
             button
         );
     }
 }
-
-const obj = new MySimpleClass();
-obj.DoSomething();
