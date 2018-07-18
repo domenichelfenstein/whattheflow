@@ -10,7 +10,9 @@
 	},
 	"author": "Domenic Helfenstein",
 	"license": "MIT",
-	"dependencies": {},
+	"dependencies": {
+		"@webcomponents/webcomponentsjs": "2.0.2"
+	},
 	"devDependencies": {
 		"typescript": "2.9.2",
 		"browserify": "16.2.2",

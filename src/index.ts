@@ -1,4 +1,1 @@
-import { MySimpleClass } from "./components/simple";
-
-const obj = new MySimpleClass();
-obj.DoSomething();
+import "./components/simple";
