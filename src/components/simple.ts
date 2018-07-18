@@ -1,4 +1,6 @@
-class MyElement extends HTMLElement {
+import "@webcomponents/webcomponentsjs";
+
+class MyApplication extends HTMLElement {
     constructor() {
         super();
 
@@ -9,4 +11,4 @@ class MyElement extends HTMLElement {
     }
 }
 
-customElements.define('my-element', MyElement);
+customElements.define('my-application', MyApplication);
