@@ -2,11 +2,12 @@
 	"name": "whattheflow",
 	"version": "1.0.0",
 	"scripts": {
-		"clear": "./node_modules/rimraf/bin.js ./dist/ && ./node_modules/rimraf/bin.js ./build/",
-		"prepare": "./node_modules/copyfiles/copyfiles -e \"./src/**/*.ts\" -u 1 \"./src/**/*\" dist",
-		"prebuild": "npm run clear && npm run prepare && ./node_modules/.bin/tsc --p ./configs/tsconfig.json",
-		"build": "npm run prebuild && ./node_modules/browserify/bin/cmd.js ./build/index.js >  ./dist/bundle.js",
-		"start": "npm run build && ./node_modules/lite-server/bin/lite-server -c ./configs/lite-server.json"
+		"clear": "node ./node_modules/rimraf/bin.js ./dist/ && node ./node_modules/rimraf/bin.js ./build/",
+		"prepare": "node ./node_modules/copyfiles/copyfiles -e \"src/**/*.ts\" -u 1 \"src/**/*\" dist",
+		"transpile": "./node_modules/.bin/tsc --p ./configs/tsconfig.json",
+		"prebuild": "npm run clear && npm run prepare && npm run transpile",
+		"build": "npm run prebuild && node ./node_modules/browserify/bin/cmd.js -e ./build/index.js -o ./dist/bundle.js",
+		"start": "npm run build && node ./node_modules/lite-server/bin/lite-server -c ./configs/lite-server.json"
 	},
 	"author": "Domenic Helfenstein",
 	"license": "MIT",
