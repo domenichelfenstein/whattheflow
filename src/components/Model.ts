@@ -23,9 +23,6 @@ class Model extends AbstractHtmlElement {
     }
     
     .item {
-        height:80px; width: 80px;
-        border: 1px solid blue;
-        float: left;
         position: absolute;
     }
     #item_right {
@@ -33,8 +30,16 @@ class Model extends AbstractHtmlElement {
     }
 </style>
 <div id="diagramContainer">
-    <div id="item_left"  class="item"></div>
-    <div id="item_right" class="item"></div>
+    <div id="item_left"  class="item">
+        <svg width="80" height="80">
+            <circle cx="40" cy="40" r="37" stroke="black" stroke-width="3" fill="red" />
+        </svg>
+    </div>
+    <div id="item_right" class="item">
+        <svg width="80" height="80">
+            <circle cx="40" cy="40" r="37" stroke="black" stroke-width="3" fill="red" />
+        </svg>
+    </div>
 </div>
         `;
     }
@@ -74,16 +79,6 @@ class Model extends AbstractHtmlElement {
                 anchor: "Left"
             },
             common);
-
-        // instance.connect(
-        //     {
-        //         source: left,
-        //         target: right
-        //     },
-        //     common);
-
-        // instance.draggable(left);
-        // instance.draggable(right);
     }
 }
 
