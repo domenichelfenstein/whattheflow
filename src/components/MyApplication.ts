@@ -10,7 +10,7 @@ class MyApplication extends AbstractElement {
             }
             </style>
             <h1>Web Component</h1>
-            <my-element></my-element>`;
+            <my-element name="Hans"></my-element>`;
     }
 }
 

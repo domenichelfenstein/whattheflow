@@ -4,19 +4,19 @@ export abstract class AbstractElement extends HTMLElement {
     abstract getHtml(): string;
 
     connectedCallback() {
+        for (let i = 0; i < this.attributes.length; i++) {
+            const element = this.attributes[i];
+            this[element.name] = element.value;
+        }
 
         var shadow = this.attachShadow({mode: 'closed'});
-
         var template = document.createElement("template");
-        
+
         template.innerHTML = this.getHtml();
 
         shadow.appendChild(template);
-
         ShadyCSS.prepareTemplate(template, this.generateUUID());
-
         ShadyCSS.styleElement(this);
-
         shadow.appendChild(template.content.cloneNode(true));
     }
 
