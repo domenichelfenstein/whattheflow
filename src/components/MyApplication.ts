@@ -1,7 +1,7 @@
-import { AbstractElement } from "./AbstractElement";
-import "./MyElement";
+import { AbstractHtmlElement } from "../lib/AbstractHtmlElement";
+import "./Model";
 
-class MyApplication extends AbstractElement {
+class MyApplication extends AbstractHtmlElement {
     getHtml() {
         return /*html*/`
             <style>
@@ -10,7 +10,7 @@ class MyApplication extends AbstractElement {
             }
             </style>
             <h1>Web Component</h1>
-            <my-element name="Hans"></my-element>`;
+            <wtf-model width="200", height="500"></wtf-model>`;
     }
 }
 
