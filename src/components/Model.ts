@@ -26,11 +26,15 @@ class Model extends AbstractHtmlElement {
         height:80px; width: 80px;
         border: 1px solid blue;
         float: left;
+        position: absolute;
+    }
+    #item_right {
+        left: 180px;
     }
 </style>
 <div id="diagramContainer">
     <div id="item_left"  class="item"></div>
-    <div id="item_right" class="item" style="margin-left:50px;"></div>
+    <div id="item_right" class="item"></div>
 </div>
         `;
     }
@@ -44,20 +48,42 @@ class Model extends AbstractHtmlElement {
         const left = <Element>this.shadow.querySelector("#item_left");
         const right = <Element>this.shadow.querySelector("#item_right");
 
-        var common = {
+        var common = <any>{
+            overlays: [["Arrow", { width: 12, length: 12, location: 0.67 }]],
             connector: ["Straight"],
             anchor: ["Left", "Right"],
-            endpoint:"Dot"
+            endpoint: "Dot",
+            isSource:true,
+            isTarget:true
         };
 
-        instance.connect({
-            source: left,
-            target: right
-        },
-        common);
+        var gridDefinition = <any>{ grid:[10,10] };
 
-        instance.draggable(left);
-        instance.draggable(right);
+        instance.draggable(left, gridDefinition);
+        instance.addEndpoint(
+            left,
+            <any>{
+                anchor: "Right"
+            },
+            common);
+
+        instance.draggable(right, gridDefinition);
+        instance.addEndpoint(
+            right,
+            <any>{
+                anchor: "Left"
+            },
+            common);
+
+        // instance.connect(
+        //     {
+        //         source: left,
+        //         target: right
+        //     },
+        //     common);
+
+        // instance.draggable(left);
+        // instance.draggable(right);
     }
 }
 
