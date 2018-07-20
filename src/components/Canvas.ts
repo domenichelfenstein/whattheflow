@@ -10,11 +10,10 @@ class Canvas extends AbstractHtmlElement {
 
     getHtml() {
         return /*html*/`
-${Draggable.getCss()}
-${Canvas.getCss()}
-<div class="flowchart-demo" id="canvas">
-    ${this.initialHtml}
-</div>
+            ${Draggable.getCss()}
+            <div id="canvas">
+                ${this.initialHtml}
+            </div>
         `;
     }
 
@@ -31,14 +30,8 @@ ${Canvas.getCss()}
                     location: 1,
                     visible:true,
                     width:11,
-                    length:11,
-                    id:"ARROW"
-                } ],
-                [ "Label", {
-                    location: 0.1,
-                    id: "label",
-                    cssClass: "aLabel"
-                }]
+                    length:11
+                } ]
             ],
             Container: canvas
         });
@@ -49,58 +42,6 @@ ${Canvas.getCss()}
                 element.apply(instance);
             }
         }
-    }
-
-    public static getCss() {
-        return /*html*/`
-<style>
-.flowchart-demo .active {
-    border: 1px dotted green;
-}
-
-.flowchart-demo .hover {
-    border: 1px dotted red;
-}
-
-.flowchart-demo .jtk-connector {
-    z-index: 4;
-}
-
-.flowchart-demo .jtk-endpoint, .endpointTargetLabel, .endpointSourceLabel {
-    z-index: 21;
-    cursor: pointer;
-}
-
-.flowchart-demo .aLabel {
-    background-color: white;
-    padding: 0.4em;
-    font: 12px sans-serif;
-    color: #444;
-    z-index: 21;
-    border: 1px dotted gray;
-    opacity: 0.8;
-    cursor: pointer;
-}
-
-.flowchart-demo .aLabel.jtk-hover {
-    background-color: #5C96BC;
-    color: white;
-    border: 1px solid white;
-}
-
-.jtk-drag {
-    outline: 4px solid pink !important;
-}
-
-path, .jtk-endpoint {
-    cursor: pointer;
-}
-
-.jtk-overlay {
-    background-color:transparent;
-}
-</style>
-        `;
     }
 }
 

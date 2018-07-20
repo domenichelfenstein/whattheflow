@@ -3,10 +3,11 @@ import { IPlumbable } from "./Interfaces";
 import { jsPlumbInstance } from "jsplumb";
 
 import "../lib/string.extensions"
-import { Uuid } from "../lib/Uuid";
 
 export class Draggable extends AbstractHtmlElement implements IPlumbable {
     private initialHtml: string;
+
+    public anchors = [ "TopCenter", "BottomCenter", "LeftMiddle", "RightMiddle" ];
 
     public top: string;
     public left: string;
@@ -22,7 +23,7 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
         this.initialHtml = this.innerHTML;
 
         super.connectedCallback();
-        
+
         this.style.top = `${this.top}em`;
         this.style.left = `${this.left}em`;
     }
@@ -30,11 +31,15 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
     apply(instance: jsPlumbInstance) {
         instance.draggable(this, <any>{ grid: [20, 20] });
 
-        const anchors = [ "TopCenter", "BottomCenter", "LeftMiddle", "RightMiddle" ];
-        
-        anchors.forEach(a => instance.addEndpoint(this, <any>Draggable.endpoint, <any>{
-            anchor: a, isSource: true, isTarget: true, uuid: `${this.id}${a}`
-        }));
+        this.anchors.forEach(a => instance.addEndpoint(
+            this,
+            <any>Draggable.endpoint,
+            <any>{
+                anchor: a,
+                isSource: true,
+                isTarget: true,
+                uuid: `${this.id}${a}`
+            }));
     }
 
     private static connectorPaintStyle = {
