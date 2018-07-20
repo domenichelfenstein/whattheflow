@@ -9,16 +9,16 @@
 </head>
 
 <body>
-    <wtf-canvas width="800" height="800">
-        <wtf-draggable id="zeochem" top="30" left="370">Zeochem</wtf-draggable>
-        <wtf-draggable id="buchhaltung" top="150" left="10">Buchhaltung</wtf-draggable>
-        <wtf-draggable id="innendienst" top="150" left="130">Verkauf Innendienst</wtf-draggable>
-        <wtf-draggable id="deutero" top="150" left="260">Deutero</wtf-draggable>
-        <wtf-draggable id="fAndE" top="150" left="390">F & E</wtf-draggable>
-        <wtf-draggable id="aussendienst" top="150" left="520">Verkauf Aussendienst</wtf-draggable>
-        <wtf-draggable id="scm" top="150" left="650">SCM</wtf-draggable>
+    <wtf-canvas width="800" height="400">
+        <wtf-element id="zeochem" top="30" left="370" endpoints="['bottom']">Zeochem</wtf-element>
+        <wtf-element id="buchhaltung" top="150" left="10" endpoints="['top']">Buchhaltung</wtf-element>
+        <wtf-element id="innendienst" top="150" left="130" endpoints="['top']">Verkauf Innendienst</wtf-element>
+        <wtf-element id="deutero" top="150" left="260" endpoints="['top', 'bottom']">Deutero</wtf-element>
+        <wtf-element id="fAndE" top="150" left="390" endpoints="['top']">F & E</wtf-element>
+        <wtf-element id="aussendienst" top="150" left="520" endpoints="['top']">Verkauf Aussendienst</wtf-element>
+        <wtf-element id="scm" top="150" left="650" endpoints="['top']">SCM</wtf-element>
 
-        <wtf-draggable id="bossart" top="250" left="260">Michael Bossart</wtf-draggable>
+        <wtf-element id="bossart" top="250" left="260" draggable="true" endpoints="['top']" background="blue" foreground="white">Michael Bossart</wtf-element>
 
         <wtf-connection from="zeochem" source="bottom" to="buchhaltung" target="top"></wtf-connection>
         <wtf-connection from="zeochem" source="bottom" to="innendienst" target="top"></wtf-connection>

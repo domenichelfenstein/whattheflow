@@ -3,14 +3,31 @@ import { IPlumbable } from "./Interfaces";
 import { jsPlumbInstance } from "jsplumb";
 
 import "../lib/string.extensions"
+import { Direction, toEndpointName } from "./Common";
 
-export class Draggable extends AbstractHtmlElement implements IPlumbable {
+export class WtfElement extends AbstractHtmlElement implements IPlumbable {
     private initialHtml: string;
 
-    public anchors = [ "TopCenter", "BottomCenter", "LeftMiddle", "RightMiddle" ];
-
+    public endpoints = "['top', 'right', 'bottom', 'left']";
+    public background = "#eeeeef";
+    public foreground = "black";
     public top: string;
     public left: string;
+
+    private get endpointArray() {
+        return JSON.parse(this.endpoints.replaceAll("'", "\""));
+    }
+
+    private get anchors() {
+        var result = [];
+
+        for (let i = 0; i < this.endpointArray.length; i++) {
+            const direction = <Direction>this.endpointArray[i];
+            result.push(toEndpointName(direction));
+        }
+
+        return result;
+    }
 
     getHtml() {
         return /*html*/`
@@ -26,14 +43,18 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
 
         this.style.top = `${this.top}px`;
         this.style.left = `${this.left}px`;
+        this.style.backgroundColor = this.background;
+        this.style.color = this.foreground;
     }
 
     apply(instance: jsPlumbInstance) {
-        instance.draggable(this, <any>{ grid: [20, 20] });
-
+        if(this.draggable) {
+            instance.draggable(this, <any>{ grid: [20, 20] });
+        }
+        
         this.anchors.forEach(a => instance.addEndpoint(
             this,
-            <any>Draggable.endpoint,
+            <any>WtfElement.endpoint,
             <any>{
                 anchor: a,
                 isSource: true,
@@ -73,9 +94,9 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
         },
         isSource: true,
         connector: ["Flowchart", { stub: [20, 20], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
-        connectorStyle: Draggable.connectorPaintStyle,
-        hoverPaintStyle: Draggable.endpointHoverStyle,
-        connectorHoverStyle: Draggable.connectorHoverStyle,
+        connectorStyle: WtfElement.connectorPaintStyle,
+        hoverPaintStyle: WtfElement.endpointHoverStyle,
+        connectorHoverStyle: WtfElement.connectorHoverStyle,
         dragOptions: {},
         overlays: [
             ["Label", {
@@ -90,7 +111,7 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
     public static getCss() {
         return /*html*/`
         <style>
-        wtf-draggable {
+        wtf-element {
             border: 1px solid #346789;
             box-shadow: 2px 2px 19px #aaa;
             border-radius: 0.5em;
@@ -104,15 +125,13 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
             text-align: center;
             z-index: 20;
             position: absolute;
-            background-color: #eeeeef;
-            color: black;
             font-family: helvetica, sans-serif;
             padding: 0.5em;
             font-size: 0.9em;
             transition: box-shadow 0.15s ease-in;
         }
         
-        wtf-draggable:hover {
+        wtf-element:hover {
             box-shadow: 2px 2px 19px #444;
             opacity: 0.6;
         }
@@ -121,4 +140,4 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
     }
 }
 
-window.customElements.define('wtf-draggable', Draggable);
+window.customElements.define('wtf-element', WtfElement);
