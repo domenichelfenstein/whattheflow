@@ -1,5 +1,9 @@
 import { AbstractHtmlElement } from "../lib/AbstractHtmlElement";
-import { jsPlumb } from "jsplumb";
+import { jsPlumb, jsPlumbInstance } from "jsplumb";
+
+import "./Draggable";
+import { Draggable } from "./Draggable";
+import { IPlumbable } from "./Interfaces";
 
 // http://www.freedevelopertutorials.com/jsplumb-tutorial/connections/
 class Model extends AbstractHtmlElement {
@@ -13,138 +17,13 @@ class Model extends AbstractHtmlElement {
         return parseInt(this.height);
     }
 
-    getHtml() {
-        return /*html*/`
-<style>
-.demo {
-    /* for IE10+ touch devices */
-    touch-action:none;
-}
+    public jsPlumbInstance: jsPlumbInstance;
 
-.flowchart-demo .window {
-    border: 1px solid #346789;
-    box-shadow: 2px 2px 19px #aaa;
-    -o-box-shadow: 2px 2px 19px #aaa;
-    -webkit-box-shadow: 2px 2px 19px #aaa;
-    -moz-box-shadow: 2px 2px 19px #aaa;
-    -moz-border-radius: 0.5em;
-    border-radius: 0.5em;
-    opacity: 0.8;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    text-align: center;
-    z-index: 20;
-    position: absolute;
-    background-color: #eeeeef;
-    color: black;
-    font-family: helvetica, sans-serif;
-    padding: 0.5em;
-    font-size: 0.9em;
-    -webkit-transition: -webkit-box-shadow 0.15s ease-in;
-    -moz-transition: -moz-box-shadow 0.15s ease-in;
-    -o-transition: -o-box-shadow 0.15s ease-in;
-    transition: box-shadow 0.15s ease-in;
-}
+    prepare() {
+        const canvas = this.shadow.querySelector("#canvas");
 
-.flowchart-demo .window:hover {
-    box-shadow: 2px 2px 19px #444;
-    -o-box-shadow: 2px 2px 19px #444;
-    -webkit-box-shadow: 2px 2px 19px #444;
-    -moz-box-shadow: 2px 2px 19px #444;
-    opacity: 0.6;
-}
-
-.flowchart-demo .active {
-    border: 1px dotted green;
-}
-
-.flowchart-demo .hover {
-    border: 1px dotted red;
-}
-
-#flowchartWindow1 {
-    top: 34em;
-    left: 5em;
-}
-
-#flowchartWindow2 {
-    top: 7em;
-    left: 36em;
-}
-
-#flowchartWindow3 {
-    top: 27em;
-    left: 48em;
-}
-
-#flowchartWindow4 {
-    top: 23em;
-    left: 22em;
-}
-
-.flowchart-demo .jtk-connector {
-    z-index: 4;
-}
-
-.flowchart-demo .jtk-endpoint, .endpointTargetLabel, .endpointSourceLabel {
-    z-index: 21;
-    cursor: pointer;
-}
-
-.flowchart-demo .aLabel {
-    background-color: white;
-    padding: 0.4em;
-    font: 12px sans-serif;
-    color: #444;
-    z-index: 21;
-    border: 1px dotted gray;
-    opacity: 0.8;
-    cursor: pointer;
-}
-
-.flowchart-demo .aLabel.jtk-hover {
-    background-color: #5C96BC;
-    color: white;
-    border: 1px solid white;
-}
-
-.window.jtk-connected {
-    border: 1px solid green;
-}
-
-.jtk-drag {
-    outline: 4px solid pink !important;
-}
-
-path, .jtk-endpoint {
-    cursor: pointer;
-}
-
-.jtk-overlay {
-    background-color:transparent;
-}
-</style>
-<div class="jtk-demo-canvas canvas-wide flowchart-demo jtk-surface jtk-surface-nopan" id="canvas">
-    <div class="window jtk-node" id="flowchartWindow1"><strong>1</strong><br/><br/></div>
-    <div class="window jtk-node" id="flowchartWindow2"><strong>2</strong><br/><br/></div>
-    <div class="window jtk-node" id="flowchartWindow3"><strong>3</strong><br/><br/></div>
-    <div class="window jtk-node" id="flowchartWindow4"><strong>4</strong><br/><br/></div>
-</div>
-        `;
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
-
-        var instance = window["jsp"] = jsPlumb.getInstance({
-            // default drag options
+        this.jsPlumbInstance = window["jsp"] = jsPlumb.getInstance({
             DragOptions: { cursor: 'pointer', zIndex: 2000 },
-            // the overlays to decorate each connection with.  note that the label overlay uses a function to generate the label text; in this
-            // case it returns the 'labelText' member that we set on each connection in the 'init' method below.
             ConnectionOverlays: [
                 [ "Arrow", {
                     location: 1,
@@ -165,8 +44,32 @@ path, .jtk-endpoint {
                     }
                 }]
             ],
-            Container: this.shadow.querySelector("#canvas")
+            Container: canvas
         });
+
+        for (let i = 0; i < canvas.children.length; i++) {
+            const element = <IPlumbable><any>canvas.children[i];
+            element.apply(this.jsPlumbInstance);
+        }
+    }
+
+    getHtml() {
+        return /*html*/`
+${Draggable.getCss()}
+${Model.getCss()}
+<div class="flowchart-demo" id="canvas">
+    <wtf-draggable number="1" top="34" left="5"></wtf-draggable>
+    <wtf-draggable number="2" top="7" left="36"></wtf-draggable>
+    <wtf-draggable number="3" top="27" left="48"></wtf-draggable>
+    <wtf-draggable number="4" top="23" left="22"></wtf-draggable>
+</div>
+        `;
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+        
+        this.prepare();
     
         var basicType = {
             connector: "StateMachine",
@@ -176,7 +79,7 @@ path, .jtk-endpoint {
                 "Arrow"
             ]
         };
-        instance.registerConnectionType("basic", basicType);
+        this.jsPlumbInstance.registerConnectionType("basic", basicType);
     
         // this is the paint style for the connecting lines..
         var connectorPaintStyle = {
@@ -238,21 +141,20 @@ path, .jtk-endpoint {
             };
     
         var _addEndpoints = (toId, sourceAnchors, targetAnchors) => {
-            instance.draggable(<any>this.shadow.querySelector("#flowchart" + toId));
             for (var i = 0; i < sourceAnchors.length; i++) {
                 var sourceUUID = toId + sourceAnchors[i];
-                instance.addEndpoint(<any>this.shadow.querySelector("#flowchart" + toId), <any>sourceEndpoint, <any>{
+                this.jsPlumbInstance.addEndpoint(<any>this.shadow.querySelector("#flowchart" + toId), <any>sourceEndpoint, <any>{
                     anchor: sourceAnchors[i], uuid: sourceUUID
                 });
             }
             for (var j = 0; j < targetAnchors.length; j++) {
                 var targetUUID = toId + targetAnchors[j];
-                instance.addEndpoint(<any>this.shadow.querySelector("#flowchart" + toId), <any>targetEndpoint, <any>{ anchor: targetAnchors[j], uuid: targetUUID });
+                this.jsPlumbInstance.addEndpoint(<any>this.shadow.querySelector("#flowchart" + toId), <any>targetEndpoint, <any>{ anchor: targetAnchors[j], uuid: targetUUID });
             }
         };
     
         // suspend drawing and initialise.
-        instance.batch(() => {
+        this.jsPlumbInstance.batch(() => {
     
             _addEndpoints("Window4", ["TopCenter", "BottomCenter"], ["LeftMiddle", "RightMiddle"]);
             _addEndpoints("Window2", ["LeftMiddle", "BottomCenter"], ["TopCenter", "RightMiddle"]);
@@ -260,7 +162,7 @@ path, .jtk-endpoint {
             _addEndpoints("Window1", ["LeftMiddle", "RightMiddle"], ["TopCenter", "BottomCenter"]);
     
             // listen for new connections; initialise them the same way we initialise the connections at startup.
-            instance.bind("connection", (connInfo, originalEvent) => {
+            this.jsPlumbInstance.bind("connection", (connInfo, originalEvent) => {
                 init(connInfo.connection);
             });
     
@@ -271,37 +173,89 @@ path, .jtk-endpoint {
             //jsPlumb.draggable(document.querySelectorAll(".window"), { grid: [20, 20] });
     
             // connect a few up
-            instance.connect(<any>{uuids: ["Window2BottomCenter", "Window3TopCenter"], editable: true});
-            instance.connect(<any>{uuids: ["Window2LeftMiddle", "Window4LeftMiddle"], editable: true});
-            instance.connect(<any>{uuids: ["Window4TopCenter", "Window4RightMiddle"], editable: true});
-            instance.connect(<any>{uuids: ["Window3RightMiddle", "Window2RightMiddle"], editable: true});
-            instance.connect(<any>{uuids: ["Window4BottomCenter", "Window1TopCenter"], editable: true});
-            instance.connect(<any>{uuids: ["Window3BottomCenter", "Window1BottomCenter"], editable: true});
+            this.jsPlumbInstance.connect(<any>{uuids: ["Window2BottomCenter", "Window3TopCenter"], editable: true});
+            this.jsPlumbInstance.connect(<any>{uuids: ["Window2LeftMiddle", "Window4LeftMiddle"], editable: true});
+            this.jsPlumbInstance.connect(<any>{uuids: ["Window4TopCenter", "Window4RightMiddle"], editable: true});
+            this.jsPlumbInstance.connect(<any>{uuids: ["Window3RightMiddle", "Window2RightMiddle"], editable: true});
+            this.jsPlumbInstance.connect(<any>{uuids: ["Window4BottomCenter", "Window1TopCenter"], editable: true});
+            this.jsPlumbInstance.connect(<any>{uuids: ["Window3BottomCenter", "Window1BottomCenter"], editable: true});
             //
     
             //
             // listen for clicks on connections, and offer to delete connections on click.
             //
-            instance.bind("click", (conn, originalEvent) => {
+            this.jsPlumbInstance.bind("click", (conn, originalEvent) => {
                // if (confirm("Delete connection from " + conn.sourceId + " to " + conn.targetId + "?"))
                  //   instance.detach(conn);
                 conn["toggleType"]("basic");
             });
     
-            instance.bind("connectionDrag", (connection) => {
+            this.jsPlumbInstance.bind("connectionDrag", (connection) => {
                 console.log("connection " + connection["id"] + " is being dragged. suspendedElement is ", connection["suspendedElement"], " of type ", connection["suspendedElementType"]);
             });
     
-            instance.bind("connectionDragStop", (connection) => {
+            this.jsPlumbInstance.bind("connectionDragStop", (connection) => {
                 console.log("connection " + connection["id"] + " was dragged");
             });
     
-            instance.bind("connectionMoved", (params) => {
+            this.jsPlumbInstance.bind("connectionMoved", (params) => {
                 console.log("connection " + params.connection.id + " was moved");
             });
         });
     
-        jsPlumb["fire"]("jsPlumbDemoLoaded", instance);
+        jsPlumb["fire"]("jsPlumbDemoLoaded", this.jsPlumbInstance);
+    }
+
+    public static getCss() {
+        return /*html*/`
+<style>
+.flowchart-demo .active {
+    border: 1px dotted green;
+}
+
+.flowchart-demo .hover {
+    border: 1px dotted red;
+}
+
+.flowchart-demo .jtk-connector {
+    z-index: 4;
+}
+
+.flowchart-demo .jtk-endpoint, .endpointTargetLabel, .endpointSourceLabel {
+    z-index: 21;
+    cursor: pointer;
+}
+
+.flowchart-demo .aLabel {
+    background-color: white;
+    padding: 0.4em;
+    font: 12px sans-serif;
+    color: #444;
+    z-index: 21;
+    border: 1px dotted gray;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.flowchart-demo .aLabel.jtk-hover {
+    background-color: #5C96BC;
+    color: white;
+    border: 1px solid white;
+}
+
+.jtk-drag {
+    outline: 4px solid pink !important;
+}
+
+path, .jtk-endpoint {
+    cursor: pointer;
+}
+
+.jtk-overlay {
+    background-color:transparent;
+}
+</style>
+        `;
     }
 }
 

@@ -8,6 +8,7 @@
         "strict": true,
         "strictPropertyInitialization": false,
         "noImplicitAny": false,
+        "strictNullChecks": false,
         "lib": [
             "es2017",
             "dom"
