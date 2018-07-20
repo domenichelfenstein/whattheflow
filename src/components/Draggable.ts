@@ -24,8 +24,8 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
 
         super.connectedCallback();
 
-        this.style.top = `${this.top}em`;
-        this.style.left = `${this.left}em`;
+        this.style.top = `${this.top}px`;
+        this.style.left = `${this.left}px`;
     }
 
     apply(instance: jsPlumbInstance) {
@@ -38,6 +38,7 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
                 anchor: a,
                 isSource: true,
                 isTarget: true,
+                maxConnections: -1,
                 uuid: `${this.id}${a}`
             }));
     }
@@ -71,7 +72,7 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
             strokeWidth: 1
         },
         isSource: true,
-        connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
+        connector: ["Flowchart", { stub: [20, 20], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
         connectorStyle: Draggable.connectorPaintStyle,
         hoverPaintStyle: Draggable.endpointHoverStyle,
         connectorHoverStyle: Draggable.connectorHoverStyle,
@@ -92,14 +93,10 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
         wtf-draggable {
             border: 1px solid #346789;
             box-shadow: 2px 2px 19px #aaa;
-            -o-box-shadow: 2px 2px 19px #aaa;
-            -webkit-box-shadow: 2px 2px 19px #aaa;
-            -moz-box-shadow: 2px 2px 19px #aaa;
-            -moz-border-radius: 0.5em;
             border-radius: 0.5em;
             opacity: 0.8;
             width: 80px;
-            height: 80px;
+            height: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -112,17 +109,11 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
             font-family: helvetica, sans-serif;
             padding: 0.5em;
             font-size: 0.9em;
-            -webkit-transition: -webkit-box-shadow 0.15s ease-in;
-            -moz-transition: -moz-box-shadow 0.15s ease-in;
-            -o-transition: -o-box-shadow 0.15s ease-in;
             transition: box-shadow 0.15s ease-in;
         }
         
         wtf-draggable:hover {
             box-shadow: 2px 2px 19px #444;
-            -o-box-shadow: 2px 2px 19px #444;
-            -webkit-box-shadow: 2px 2px 19px #444;
-            -moz-box-shadow: 2px 2px 19px #444;
             opacity: 0.6;
         }
         </style>

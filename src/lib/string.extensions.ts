@@ -1,4 +1,5 @@
 interface String {
+    capitalizeFirstChar(): string;
     firstCharToLower(): string;
     paddingLeft(value): string;
     replaceAll(search, replacement): string; 
@@ -6,6 +7,11 @@ interface String {
     cutOnEnd(numberOfChars: number): string;
     compare(other: string): number;
     decodeBase64(): string;
+}
+
+String.prototype.capitalizeFirstChar = function () {
+    var first = this[0].toUpperCase();
+    return first + this.substring(1, this.length);
 }
 
 String.prototype.firstCharToLower = function () {

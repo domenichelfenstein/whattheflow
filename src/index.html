@@ -9,20 +9,25 @@
 </head>
 
 <body>
-    <wtf-canvas>
-        <wtf-draggable top="34" left="5">
-            Eins
-        </wtf-draggable>
-        <wtf-draggable top="7" left="36">
-            <strong>Zwei</strong>
-        </wtf-draggable>
-        <wtf-draggable top="27" left="48">
-            Drei
-        </wtf-draggable>
-        <wtf-draggable top="23" left="22">
-            <strong>Vier</strong>
-        </wtf-draggable>
-        <wtf-draggable top="40" left="25">Test</wtf-draggable>
+    <wtf-canvas width="800" height="800">
+        <wtf-draggable id="zeochem" top="30" left="370">Zeochem</wtf-draggable>
+        <wtf-draggable id="buchhaltung" top="150" left="10">Buchhaltung</wtf-draggable>
+        <wtf-draggable id="innendienst" top="150" left="130">Verkauf Innendienst</wtf-draggable>
+        <wtf-draggable id="deutero" top="150" left="260">Deutero</wtf-draggable>
+        <wtf-draggable id="fAndE" top="150" left="390">F & E</wtf-draggable>
+        <wtf-draggable id="aussendienst" top="150" left="520">Verkauf Aussendienst</wtf-draggable>
+        <wtf-draggable id="scm" top="150" left="650">SCM</wtf-draggable>
+
+        <wtf-draggable id="bossart" top="250" left="260">Michael Bossart</wtf-draggable>
+
+        <wtf-connection from="zeochem" source="bottom" to="buchhaltung" target="top"></wtf-connection>
+        <wtf-connection from="zeochem" source="bottom" to="innendienst" target="top"></wtf-connection>
+        <wtf-connection from="zeochem" source="bottom" to="deutero" target="top"></wtf-connection>
+        <wtf-connection from="zeochem" source="bottom" to="fAndE" target="top"></wtf-connection>
+        <wtf-connection from="zeochem" source="bottom" to="aussendienst" target="top"></wtf-connection>
+        <wtf-connection from="zeochem" source="bottom" to="scm" target="top"></wtf-connection>
+
+        <wtf-connection from="deutero" source="bottom" to="bossart" target="top"></wtf-connection>
     </wtf-canvas>
     <script src="bundle.js"></script>
 </body>
