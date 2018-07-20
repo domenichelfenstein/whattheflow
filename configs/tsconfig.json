@@ -2,13 +2,9 @@
     "compilerOptions": {
         "target": "es2015",
         "module": "commonjs",
-        "sourceMap": false,
+        "sourceMap": true,
         "declaration": false,
         "outDir": "../build",
-        "strict": true,
-        "strictPropertyInitialization": false,
-        "noImplicitAny": false,
-        "strictNullChecks": false,
         "lib": [
             "es2017",
             "dom"

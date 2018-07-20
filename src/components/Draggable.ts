@@ -1,6 +1,9 @@
 import { AbstractHtmlElement } from "../lib/AbstractHtmlElement";
 import { IPlumbable } from "./Interfaces";
 import { jsPlumbInstance } from "jsplumb";
+import { Uuid } from "../lib/Uuid";
+
+import "../lib/string.extensions"
 
 export class Draggable extends AbstractHtmlElement implements IPlumbable {
     public number: string;
@@ -22,9 +25,58 @@ export class Draggable extends AbstractHtmlElement implements IPlumbable {
         this.style.top = `${this.top}em`;
         this.style.left = `${this.left}em`;
     }
-    
+
     apply(instance: jsPlumbInstance) {
-        instance.draggable(this);
+        instance.draggable(this, <any>{ grid: [20, 20] });
+
+        var connectorPaintStyle = {
+            strokeWidth: 2,
+            stroke: "#61B7CF",
+            joinstyle: "round",
+            outlineStroke: "white",
+            outlineWidth: 2
+        },
+        // .. and this is the hover style.
+        connectorHoverStyle = {
+            strokeWidth: 3,
+            stroke: "#216477",
+            outlineWidth: 5,
+            outlineStroke: "white"
+        },
+        endpointHoverStyle = {
+            fill: "#216477",
+            stroke: "#216477"
+        },
+        // the definition of source endpoints (the small blue ones)
+        endpoint = {
+            endpoint: "Dot",
+            paintStyle: {
+                stroke: "#7AB02C",
+                fill: "transparent",
+                radius: 7,
+                strokeWidth: 1
+            },
+            isSource: true,
+            connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
+            connectorStyle: connectorPaintStyle,
+            hoverPaintStyle: endpointHoverStyle,
+            connectorHoverStyle: connectorHoverStyle,
+            dragOptions: {},
+            overlays: [
+                ["Label", {
+                    location: [0.5, 1.5],
+                    label: "Drag",
+                    cssClass: "endpointSourceLabel",
+                    visible: false
+                }]
+            ]
+        };
+
+        const anchors = [ "TopCenter", "BottomCenter", "LeftMiddle", "RightMiddle" ];
+        
+        anchors.forEach(a => instance.addEndpoint(this, <any>endpoint, <any>{
+            anchor: a, isSource: true, isTarget: true, uuid: `${this.id}TopCenter`
+        }));
     }
 
     public static getCss() {
