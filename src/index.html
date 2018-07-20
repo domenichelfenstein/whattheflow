@@ -6,19 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My first experiment</title>
     <script src="./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce.js"></script>
+    <style>
+    #mycanvas wtf-element {
+        border: 1px solid #346789;
+        box-shadow: 2px 2px 19px #aaa;
+        border-radius: 0.5em;
+        font-size: .7em;
+        background: lightcyan;
+        opacity: .8;
+        font-family: helvetica, sans-serif;
+        transition: box-shadow 0.15s ease-in;
+        width: 80px;
+        height: 30px;
+    }
+
+    wtf-element[draggable="true"] {
+        cursor: pointer;
+    }
+    </style>
 </head>
 
 <body>
-    <wtf-canvas width="800" height="400">
-        <wtf-element id="zeochem" top="30" left="370" endpoints="['bottom']">Zeochem</wtf-element>
-        <wtf-element id="buchhaltung" top="150" left="10" endpoints="['top']">Buchhaltung</wtf-element>
-        <wtf-element id="innendienst" top="150" left="130" endpoints="['top']">Verkauf Innendienst</wtf-element>
-        <wtf-element id="deutero" top="150" left="260" endpoints="['top', 'bottom']">Deutero</wtf-element>
-        <wtf-element id="fAndE" top="150" left="390" endpoints="['top']">F & E</wtf-element>
-        <wtf-element id="aussendienst" top="150" left="520" endpoints="['top']">Verkauf Aussendienst</wtf-element>
-        <wtf-element id="scm" top="150" left="650" endpoints="['top']">SCM</wtf-element>
-
-        <wtf-element id="bossart" top="250" left="260" draggable="true" endpoints="['top']" background="blue" foreground="white">Michael Bossart</wtf-element>
+    <wtf-canvas id="mycanvas" width="800" height="400">
+        <wtf-level>
+            <wtf-element id="zeochem" endpoints="['bottom']">Zeochem</wtf-element>
+        </wtf-level>
+        <wtf-level>
+            <wtf-element id="buchhaltung" endpoints="['top']">Buchhaltung</wtf-element>
+            <wtf-element id="innendienst" endpoints="['top']">Verkauf Innendienst</wtf-element>
+            <wtf-element id="deutero" endpoints="['top', 'bottom']">Deutero</wtf-element>
+            <wtf-element id="fAndE" endpoints="['top']">F + E</wtf-element>
+            <wtf-element id="aussendienst" endpoints="['top']">Verkauf Aussendienst</wtf-element>
+            <wtf-element id="scm" endpoints="['top']">SCM</wtf-element>
+        </wtf-level>
+        <wtf-level>
+            <wtf-element id="bossart" draggable="true" endpoints="['top']">Michael Bossart</wtf-element>
+        </wtf-level>
 
         <wtf-connection from="zeochem" source="bottom" to="buchhaltung" target="top"></wtf-connection>
         <wtf-connection from="zeochem" source="bottom" to="innendienst" target="top"></wtf-connection>

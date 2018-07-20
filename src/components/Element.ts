@@ -9,10 +9,8 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
     private initialHtml: string;
 
     public endpoints = "['top', 'right', 'bottom', 'left']";
-    public background = "#eeeeef";
-    public foreground = "black";
-    public top: string;
-    public left: string;
+    public top = "";
+    public left = "";
 
     private get endpointArray() {
         return JSON.parse(this.endpoints.replaceAll("'", "\""));
@@ -32,29 +30,36 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
     getHtml() {
         return /*html*/`
             <style>
+            .wtf-block {
+                flex: 1 1 auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
             </style>
-            ${this.initialHtml}`;
+            <div class="wtf-block">
+                ${this.initialHtml}
+            </div>`;
     }
 
     connectedCallback() {
         this.initialHtml = this.innerHTML;
 
         super.connectedCallback();
-
-        this.style.top = `${this.top}px`;
-        this.style.left = `${this.left}px`;
-        this.style.backgroundColor = this.background;
-        this.style.color = this.foreground;
     }
 
     apply(instance: jsPlumbInstance) {
         if(this.draggable) {
             instance.draggable(this, <any>{ grid: [20, 20] });
         }
+
+        this.style.top = `${this.top}px`;
+        this.style.left = `${this.left}px`;
         
         this.anchors.forEach(a => instance.addEndpoint(
             this,
-            <any>WtfElement.endpoint,
+            <any>this.endpoint,
             <any>{
                 anchor: a,
                 isSource: true,
@@ -84,7 +89,7 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
         stroke: "#216477"
     };
 
-    private static endpoint = {
+    private endpoint = {
         endpoint: "Dot",
         paintStyle: {
             stroke: "#7AB02C",
@@ -106,37 +111,6 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
                 visible: false
             }]
         ]
-    }
-
-    public static getCss() {
-        return /*html*/`
-        <style>
-        wtf-element {
-            border: 1px solid #346789;
-            box-shadow: 2px 2px 19px #aaa;
-            border-radius: 0.5em;
-            opacity: 0.8;
-            width: 80px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            text-align: center;
-            z-index: 20;
-            position: absolute;
-            font-family: helvetica, sans-serif;
-            padding: 0.5em;
-            font-size: 0.9em;
-            transition: box-shadow 0.15s ease-in;
-        }
-        
-        wtf-element:hover {
-            box-shadow: 2px 2px 19px #444;
-            opacity: 0.6;
-        }
-        </style>
-        `;
     }
 }
 

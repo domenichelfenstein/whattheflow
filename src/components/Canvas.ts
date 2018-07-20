@@ -3,7 +3,7 @@ import { jsPlumb } from "jsplumb";
 
 import "./Element";
 import "./Connection";
-import { WtfElement } from "./Element";
+import "./Level";
 import { IPlumbable } from "./Interfaces";
 
 class WtfCanvas extends AbstractHtmlElement {
@@ -40,8 +40,21 @@ class WtfCanvas extends AbstractHtmlElement {
     }
     getHtml() {
         return /*html*/`
-            ${WtfElement.getCss()}
             <style>
+            wtf-level {
+                display: flex;
+                justify-content: center;
+                margin: 1em;
+                height: 90px;
+                position: relative;
+            }
+            wtf-element {
+                display: flex;
+                width: 80px;
+                height: 80px;
+                z-index: 20;
+                position: absolute;
+            }
             #canvas {
                 position: relative;
                 border: 2px solid lightgray;
