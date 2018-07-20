@@ -1,1 +1,1 @@
-import "./components/MyApplication";
+import "./components/Canvas";

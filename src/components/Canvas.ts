@@ -5,16 +5,26 @@ import "./Draggable";
 import { Draggable } from "./Draggable";
 import { IPlumbable } from "./Interfaces";
 
-class Model extends AbstractHtmlElement {
+class Canvas extends AbstractHtmlElement {
     getHtml() {
         return /*html*/`
 ${Draggable.getCss()}
-${Model.getCss()}
+${Canvas.getCss()}
 <div class="flowchart-demo" id="canvas">
-    <wtf-draggable number="1" top="34" left="5"></wtf-draggable>
-    <wtf-draggable number="2" top="7" left="36"></wtf-draggable>
-    <wtf-draggable number="3" top="27" left="48"></wtf-draggable>
-    <wtf-draggable number="4" top="23" left="22"></wtf-draggable>
+    <wtf-draggable top="34" left="5">
+        Eins
+    </wtf-draggable>
+    <wtf-draggable top="7" left="36">
+        <strong>Zwei</strong>
+    </wtf-draggable>
+    <wtf-draggable top="27" left="48">
+        Drei
+    </wtf-draggable>
+    <wtf-draggable top="23" left="22">
+        <strong>
+            Vier
+        </strong>
+    </wtf-draggable>
 </div>
         `;
     }
@@ -103,4 +113,4 @@ path, .jtk-endpoint {
     }
 }
 
-window.customElements.define('wtf-model', Model);
+window.customElements.define('wtf-canvas', Canvas);
