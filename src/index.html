@@ -20,6 +20,10 @@
         height: 30px;
     }
 
+    .wtf-block {
+        flex-direction: column;
+    }
+
     wtf-element[draggable="true"] {
         cursor: pointer;
     }
@@ -29,28 +33,28 @@
 <body>
     <wtf-canvas id="mycanvas" width="800" height="400">
         <wtf-level>
-            <wtf-element id="zeochem" endpoints="['bottom']">Zeochem</wtf-element>
+            <wtf-element id="company" endpoints="['bottom']">Company</wtf-element>
         </wtf-level>
         <wtf-level>
-            <wtf-element id="buchhaltung" endpoints="['top']">Buchhaltung</wtf-element>
-            <wtf-element id="innendienst" endpoints="['top']">Verkauf Innendienst</wtf-element>
-            <wtf-element id="deutero" endpoints="['top', 'bottom']">Deutero</wtf-element>
-            <wtf-element id="fAndE" endpoints="['top']">F + E</wtf-element>
-            <wtf-element id="aussendienst" endpoints="['top']">Verkauf Aussendienst</wtf-element>
-            <wtf-element id="scm" endpoints="['top']">SCM</wtf-element>
+            <wtf-element id="accounting" endpoints="['top']">Accounting</wtf-element>
+            <wtf-element id="inhouseSales" endpoints="['top']">in-house Sales</wtf-element>
+            <wtf-element id="subcompany" endpoints="['top', 'bottom']">Sub Company</wtf-element>
+            <wtf-element id="acronym" endpoints="['top']"><strong>A + B</strong><div>John Doe</div></wtf-element>
+            <wtf-element id="fieldService" endpoints="['top']">Field Service</wtf-element>
+            <wtf-element id="acronym2" endpoints="['top']">XYZ</wtf-element>
         </wtf-level>
         <wtf-level>
-            <wtf-element id="bossart" draggable="true" endpoints="['top']">Michael Bossart</wtf-element>
+            <wtf-element id="janeDoe" draggable="true" endpoints="['top']">Jane Doe</wtf-element>
         </wtf-level>
 
-        <wtf-connection from="zeochem" source="bottom" to="buchhaltung" target="top"></wtf-connection>
-        <wtf-connection from="zeochem" source="bottom" to="innendienst" target="top"></wtf-connection>
-        <wtf-connection from="zeochem" source="bottom" to="deutero" target="top"></wtf-connection>
-        <wtf-connection from="zeochem" source="bottom" to="fAndE" target="top"></wtf-connection>
-        <wtf-connection from="zeochem" source="bottom" to="aussendienst" target="top"></wtf-connection>
-        <wtf-connection from="zeochem" source="bottom" to="scm" target="top"></wtf-connection>
+        <wtf-connection from="company" source="bottom" to="accounting" target="top"></wtf-connection>
+        <wtf-connection from="company" source="bottom" to="inhouseSales" target="top"></wtf-connection>
+        <wtf-connection from="company" source="bottom" to="subcompany" target="top"></wtf-connection>
+        <wtf-connection from="company" source="bottom" to="acronym" target="top"></wtf-connection>
+        <wtf-connection from="company" source="bottom" to="fieldService" target="top"></wtf-connection>
+        <wtf-connection from="company" source="bottom" to="acronym2" target="top"></wtf-connection>
 
-        <wtf-connection from="deutero" source="bottom" to="bossart" target="top"></wtf-connection>
+        <wtf-connection from="subcompany" source="bottom" to="janeDoe" target="top"></wtf-connection>
     </wtf-canvas>
     <script src="bundle.js"></script>
 </body>
