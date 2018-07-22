@@ -11,27 +11,30 @@
         border: 2px solid lightgray;
         border-radius: 5px;
     }
-    /* wtf-canvas wtf-level wtf-element {
-        border: 1px solid #346789;
-        box-shadow: 2px 2px 19px #aaa;
-        border-radius: 0.5em;
+    wtf-canvas wtf-level wtf-element {
         font-size: .7em;
-        background: lightcyan;
         opacity: .8;
         font-family: helvetica, sans-serif;
         transition: box-shadow 0.15s ease-in;
         width: 80px;
         height: 30px;
-        flex-direction: column;
+        box-shadow: 2px 2px 19px #aaa;
+    }
+
+    wtf-element rect {
+        stroke: #346789;
+        fill: lightcyan;
     }
 
     wtf-canvas wtf-level wtf-element[draggable="true"] {
         cursor: pointer;
     }
     wtf-canvas wtf-level wtf-element[draggable="true"]:hover {
-        background: cyan;
         box-shadow: 2px 2px 19px #777;
-    } */
+    }
+    wtf-canvas wtf-level wtf-element[draggable="true"]:hover rect {
+        fill: cyan;
+    }
     </style>
 </head>
 
