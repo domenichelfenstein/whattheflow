@@ -7,14 +7,6 @@ export abstract class AbstractHtmlElement extends HTMLElement {
         return "";
     }
 
-    protected shadow: ShadowRoot;
-
-    constructor() {
-        super();
-
-        this.shadow = this.attachShadow({mode: 'closed'});
-    }
-
     connectedCallback() {
         for (let i = 0; i < this.attributes.length; i++) {
             const element = this.attributes[i];
@@ -25,9 +17,10 @@ export abstract class AbstractHtmlElement extends HTMLElement {
 
         template.innerHTML = this.getHtml();
 
-        this.shadow.appendChild(template);
+        this.innerHTML = "";
+        this.appendChild(template);
         ShadyCSS.prepareTemplate(template, Uuid.generateUUID());
         ShadyCSS.styleElement(this);
-        this.shadow.appendChild(template.content.cloneNode(true));
+        this.appendChild(template.content.cloneNode(true));
     }
 }

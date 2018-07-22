@@ -17,7 +17,7 @@ class WtfCanvas extends AbstractHtmlElement {
 
         super.connectedCallback();
 
-        const canvas = this.shadow.querySelector("#canvas");
+        const canvas = this.querySelector("#canvas");
         const instance = jsPlumb.getInstance({
             DragOptions: { cursor: 'pointer', zIndex: 2000 },
             ConnectionOverlays: [

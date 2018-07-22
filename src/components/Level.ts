@@ -12,8 +12,8 @@ import { WtfElement } from "./Element";
 export class WtfLevel extends AbstractHtmlElement implements IPlumbable {
     apply(instance: jsPlumbInstance) {
         var elements: WtfElement[] = [];
-        for (let i = 0; i < this.shadow.children.length; i++) {
-            const item = <WtfElement><any>this.shadow.children[i];
+        for (let i = 0; i < this.children.length; i++) {
+            const item = <WtfElement><any>this.children[i];
             if(item.apply) {
                 elements.push(item);
             }
@@ -41,10 +41,11 @@ export class WtfLevel extends AbstractHtmlElement implements IPlumbable {
 
         template.innerHTML = this.innerHTML;
 
-        this.shadow.appendChild(template);
+        this.innerHTML = "";
+        this.appendChild(template);
         ShadyCSS.prepareTemplate(template, Uuid.generateUUID());
         ShadyCSS.styleElement(this);
-        this.shadow.appendChild(template.content.cloneNode(true));
+        this.appendChild(template.content.cloneNode(true));
     }
 }
 
