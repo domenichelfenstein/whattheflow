@@ -14,7 +14,7 @@ export class WtfLevel extends AbstractHtmlElement implements IPlumbable {
         var elements: WtfElement[] = [];
         for (let i = 0; i < this.children.length; i++) {
             const item = <WtfElement><any>this.children[i];
-            if(item.apply) {
+            if (item.apply) {
                 elements.push(item);
             }
         }
@@ -22,15 +22,15 @@ export class WtfLevel extends AbstractHtmlElement implements IPlumbable {
         const count = elements.length;
         for (let i = 0; i < count; i++) {
             const element = elements[i];
-            
+
             const w = element.clientWidth;
             const m = 40;
-            const left = (this.clientWidth / 2) - ((count * w + (count-1) * m) / 2) + (i * (w + m));
+            const left = (this.clientWidth / 2) - ((count * w + (count - 1) * m) / 2) + (i * (w + m));
 
             element["top"] = "0";
             element["left"] = left + "";
-            
-            if(element.apply) {
+
+            if (element.apply) {
                 element.apply(instance);
             }
         }

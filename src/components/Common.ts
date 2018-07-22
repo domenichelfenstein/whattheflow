@@ -1,7 +1,7 @@
 export type Direction = "top" | "right" | "bottom" | "left";
 
 export function toEndpointName(direction: Direction) {
-    switch(direction) {
+    switch (direction) {
         case "top":
             return "TopCenter";
         case "right":
@@ -11,6 +11,6 @@ export function toEndpointName(direction: Direction) {
         case "left":
             return "LeftMiddle";
     }
-    
+
     return "";
 }

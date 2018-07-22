@@ -13,7 +13,10 @@ export class WtfConnection extends AbstractHtmlElement implements IPlumbable {
 
     apply(instance: jsPlumbInstance) {
         instance.connect(<any>{
-            uuids: [`${this.from}${toEndpointName(this.source)}`, `${this.to}${toEndpointName(this.target)}`],
+            uuids: [
+                `${this.from}${toEndpointName(this.source)}`,
+                `${this.to}${toEndpointName(this.target)}`
+            ],
             editable: true
         });
     }

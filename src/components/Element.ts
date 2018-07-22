@@ -50,13 +50,13 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
     }
 
     apply(instance: jsPlumbInstance) {
-        if(this.draggable) {
+        if (this.draggable) {
             instance.draggable(this, <any>{ grid: [20, 20] });
         }
 
         this.style.top = `${this.top}px`;
         this.style.left = `${this.left}px`;
-        
+
         this.anchors.forEach(a => instance.addEndpoint(
             this,
             <any>this.endpoint,

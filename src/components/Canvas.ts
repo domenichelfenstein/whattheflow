@@ -21,19 +21,19 @@ class WtfCanvas extends AbstractHtmlElement {
         const instance = jsPlumb.getInstance({
             DragOptions: { cursor: 'pointer', zIndex: 2000 },
             ConnectionOverlays: [
-                [ "Arrow", {
+                ["Arrow", {
                     location: 1,
-                    visible:true,
-                    width:11,
-                    length:11
-                } ]
+                    visible: true,
+                    width: 11,
+                    length: 11
+                }]
             ],
             Container: canvas
         });
 
         for (let i = 0; i < canvas.children.length; i++) {
             const element = <IPlumbable><any>canvas.children[i];
-            if(element.apply) {
+            if (element.apply) {
                 element.apply(instance);
             }
         }
