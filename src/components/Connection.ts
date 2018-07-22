@@ -3,13 +3,16 @@ import { IPlumbable } from "./Interfaces";
 import { jsPlumbInstance } from "jsplumb";
 
 import "../lib/string.extensions";
-import { Direction, toEndpointName } from "./Common";
+import "../lib/array.extensions";
+import { Direction, EndpointType, toEndpointName, ConnectorType } from "./Common";
 
 export class WtfConnection extends AbstractHtmlElement implements IPlumbable {
     public from: string;
     public to: string;
     public source: Direction;
     public target: Direction;
+    public endpoint: EndpointType = "blank";
+    public connector: ConnectorType = "straight";
     // public editable = false;
 
     apply(instance: jsPlumbInstance) {
@@ -18,13 +21,40 @@ export class WtfConnection extends AbstractHtmlElement implements IPlumbable {
             target: this.to,
             anchors: [ toEndpointName(this.source), toEndpointName(this.target) ],
             editable: false,
-            connector: ["Flowchart", { stub: [0, 0], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
-            endpoint: "Dot",
+            endpoint: this.endpoint.capitalizeFirstChar(),
             endpointStyle: WtfConnection.endpointPaintStyle,
-            connectorStyle: WtfConnection.connectorPaintStyle,
             hoverPaintStyle: WtfConnection.endpointHoverStyle,
+            connector: this.getConnector(),
+            connectorStyle: WtfConnection.connectorPaintStyle,
             connectorHoverStyle: WtfConnection.connectorHoverStyle
         });
+    }
+
+    private getConnector() {
+        switch(this.connector) {
+            case "flowchart":
+                return [
+                    "Flowchart",
+                    { 
+                        stub: [0, 0],
+                        gap: this.endpoint == "blank"
+                            ? 0
+                            : 10,
+                        cornerRadius: 5,
+                        alwaysRespectStubs: true
+                    }
+                ];
+            case "bezier":
+                return [
+                    "Bezier",
+                    {
+                        curviness: 75
+                    }
+                ];
+            case "straight":
+            default:
+                return "Straight";
+        }
     }
 
     private static endpointPaintStyle = {
@@ -50,6 +80,14 @@ export class WtfConnection extends AbstractHtmlElement implements IPlumbable {
         fill: "#216477",
         stroke: "#216477"
     };
+
+    private static fromConnectorToString(ct: ConnectorType) {
+        return ct
+            .replaceAll("-", " ")
+            .split(" ")
+            .select(x => x.capitalizeFirstChar())
+            .join();
+    }
 }
 
 window.customElements.define('wtf-connection', WtfConnection);

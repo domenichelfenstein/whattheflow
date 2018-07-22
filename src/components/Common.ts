@@ -14,3 +14,7 @@ export function toEndpointName(direction: Direction) {
 
     return "";
 }
+
+export type EndpointType = "dot" | "rectangle" | "image" | "blank";
+
+export type ConnectorType = "bezier" | "straight" | "flowchart";
