@@ -19,11 +19,19 @@ class WtfCanvas extends AbstractHtmlElement {
     }
 
     connectedCallback() {
-        this.initialHtml = this.innerHTML;
+        this.populateProperties();
 
-        super.connectedCallback();
+        this.style.width = `${this.width}px`;
+        this.style.height = `${this.height}px`;
+        this.style.display = "block";
+        this.style.overflow = "hidden";
+        this.style.position = "relative";
 
-        const canvas = this.querySelector("#canvas");
+
+        const style = document.createElement("style");
+        style.innerHTML = this.getCss();
+        this.appendChild(style);
+
         const instance = jsPlumb.getInstance({
             DragOptions: { cursor: 'pointer', zIndex: 2000 },
             ConnectionOverlays: [
@@ -34,19 +42,18 @@ class WtfCanvas extends AbstractHtmlElement {
                     length: 11
                 }]
             ],
-            Container: canvas
+            Container: this
         });
 
-        for (let i = 0; i < canvas.children.length; i++) {
-            const element = <IPlumbable><any>canvas.children[i];
+        for (let i = 0; i < this.children.length; i++) {
+            const element = <IPlumbable><any>this.children[i];
             if (element.apply) {
                 element.apply(instance);
             }
         }
     }
-    getHtml() {
-        return /*html*/`
-            <style>
+    getCss() {
+        return `
             wtf-level {
                 display: flex;
                 justify-content: center;
@@ -56,24 +63,15 @@ class WtfCanvas extends AbstractHtmlElement {
             }
             wtf-element {
                 display: flex;
+                flex: 1 1 auto;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
                 width: 80px;
                 height: 80px;
                 z-index: 20;
                 position: absolute;
-            }
-            #canvas {
-                position: relative;
-                border: 2px solid lightgray;
-                border-radius: 5px;
-                width: ${this.width}px;
-                height: ${this.height}px;
-                overflow: auto;
-            }
-            </style>
-            <div id="canvas">
-                ${this.initialHtml}
-            </div>
-        `;
+            }`;
     }
 }
 

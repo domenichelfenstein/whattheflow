@@ -7,11 +7,15 @@ export abstract class AbstractHtmlElement extends HTMLElement {
         return "";
     }
 
-    connectedCallback() {
+    protected populateProperties() {
         for (let i = 0; i < this.attributes.length; i++) {
             const element = this.attributes[i];
             this[element.name] = element.value;
         }
+    }
+
+    connectedCallback() {
+        this.populateProperties();
 
         this.innerHTML = this.getHtml();
     }

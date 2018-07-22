@@ -7,7 +7,11 @@
     <title>My first experiment</title>
     <script src="./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce.js"></script>
     <style>
-    #canvas wtf-element {
+    wtf-canvas {
+        border: 2px solid lightgray;
+        border-radius: 5px;
+    }
+    wtf-canvas wtf-level wtf-element {
         border: 1px solid #346789;
         box-shadow: 2px 2px 19px #aaa;
         border-radius: 0.5em;
@@ -18,16 +22,13 @@
         transition: box-shadow 0.15s ease-in;
         width: 80px;
         height: 30px;
-    }
-
-    .wtf-block {
         flex-direction: column;
     }
 
-    #canvas wtf-element[draggable="true"] {
+    wtf-canvas wtf-level wtf-element[draggable="true"] {
         cursor: pointer;
     }
-    #canvas wtf-element[draggable="true"]:hover {
+    wtf-canvas wtf-level wtf-element[draggable="true"]:hover {
         background: cyan;
         box-shadow: 2px 2px 19px #777;
     }

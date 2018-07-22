@@ -33,6 +33,8 @@ export class WtfLevel extends AbstractHtmlElement implements IPlumbable {
             const m = 40;
             const left = (this.clientWidth / 2) - ((count * w + (count - 1) * m) / 2) + (i * (w + m));
 
+            console.log(left);
+
             element["top"] = "0";
             element["left"] = left + "";
 
@@ -43,6 +45,7 @@ export class WtfLevel extends AbstractHtmlElement implements IPlumbable {
     }
 
     connectedCallback() {
+        this.populateProperties();
     }
 }
 

@@ -17,26 +17,8 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
         console.log("ctor: Element");
     }
 
-    getHtml() {
-        return /*html*/`
-            <style>
-            .wtf-block {
-                flex: 1 1 auto;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-            }
-            </style>
-            <div class="wtf-block">
-                ${this.initialHtml}
-            </div>`;
-    }
-
     connectedCallback() {
-        this.initialHtml = this.innerHTML;
-
-        super.connectedCallback();
+        this.populateProperties();
     }
 
     apply(instance: jsPlumbInstance) {
