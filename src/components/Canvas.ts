@@ -17,10 +17,11 @@ class WtfCanvas extends AbstractHtmlElement {
 
         this.style.width = `${this.width}px`;
         this.style.height = `${this.height}px`;
-        this.style.display = "block";
-        this.style.overflow = "hidden";
+        this.style.display = "flex";
+        this.style.flexDirection = "column";
+        this.style.overflow = "auto";
         this.style.position = "relative";
-
+        this.style.padding = ".5em";
 
         const style = document.createElement("style");
         style.innerHTML = this.getCss();
@@ -51,9 +52,9 @@ class WtfCanvas extends AbstractHtmlElement {
             wtf-level {
                 display: flex;
                 justify-content: center;
-                margin: 1em;
-                height: 90px;
+                align-items: center;
                 position: relative;
+                flex: 1 1 auto;
             }
             wtf-element {
                 display: flex;

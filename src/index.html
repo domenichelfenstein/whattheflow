@@ -35,7 +35,7 @@
 </head>
 
 <body>
-    <wtf-canvas id="mycanvas" width="800" height="400">
+    <wtf-canvas id="mycanvas" width="680" height="250">
         <wtf-level>
             <wtf-element id="company">Company</wtf-element>
         </wtf-level>
@@ -51,14 +51,14 @@
             <wtf-element shape="diamond" id="janeDoe" draggable="true">Jane Doe</wtf-element>
         </wtf-level>
 
-        <wtf-connection from="company" source="bottom" to="accounting" target="top"></wtf-connection>
-        <wtf-connection from="company" source="bottom" to="inhouseSales" target="top"></wtf-connection>
-        <wtf-connection from="company" source="bottom" to="subcompany" target="top"></wtf-connection>
-        <wtf-connection from="company" source="bottom" to="acronym" target="top"></wtf-connection>
-        <wtf-connection from="company" source="bottom" to="fieldService" target="top"></wtf-connection>
-        <wtf-connection from="company" source="bottom" to="acronym2" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="accounting" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="inhouseSales" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="subcompany" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="acronym" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="fieldService" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="acronym2" target="top"></wtf-connection>
 
-        <wtf-connection from="subcompany" source="bottom" to="janeDoe" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="subcompany" source="bottom" to="janeDoe" target="top"></wtf-connection>
     </wtf-canvas>
     <script src="bundle.js"></script>
 </body>

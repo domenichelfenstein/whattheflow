@@ -62,8 +62,13 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
             instance.draggable(this, <any>{ grid: [20, 20] });
         }
 
-        this.style.top = `${this.top}px`;
-        this.style.left = `${this.left}px`;
+        if(this.top) {
+            this.style.top = `${this.top}px`;
+        }
+
+        if(this.left) {
+            this.style.left = `${this.left}px`;
+        }
     }
 }
 
