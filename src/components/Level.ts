@@ -10,6 +10,12 @@ import "./Element";
 import { WtfElement } from "./Element";
 
 export class WtfLevel extends AbstractHtmlElement implements IPlumbable {
+
+    constructor() {
+        super();
+
+        console.log("ctor: Level");
+    }
     apply(instance: jsPlumbInstance) {
         var elements: WtfElement[] = [];
         for (let i = 0; i < this.children.length; i++) {
@@ -37,15 +43,6 @@ export class WtfLevel extends AbstractHtmlElement implements IPlumbable {
     }
 
     connectedCallback() {
-        var template = document.createElement("template");
-
-        template.innerHTML = this.innerHTML;
-
-        this.innerHTML = "";
-        this.appendChild(template);
-        ShadyCSS.prepareTemplate(template, Uuid.generateUUID());
-        ShadyCSS.styleElement(this);
-        this.appendChild(template.content.cloneNode(true));
     }
 }
 

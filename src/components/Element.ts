@@ -11,6 +11,12 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
     public top = "";
     public left = "";
 
+    constructor() {
+        super();
+
+        console.log("ctor: Element");
+    }
+
     getHtml() {
         return /*html*/`
             <style>

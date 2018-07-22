@@ -13,14 +13,6 @@ export abstract class AbstractHtmlElement extends HTMLElement {
             this[element.name] = element.value;
         }
 
-        var template = document.createElement("template");
-
-        template.innerHTML = this.getHtml();
-
-        this.innerHTML = "";
-        this.appendChild(template);
-        ShadyCSS.prepareTemplate(template, Uuid.generateUUID());
-        ShadyCSS.styleElement(this);
-        this.appendChild(template.content.cloneNode(true));
+        this.innerHTML = this.getHtml();
     }
 }
