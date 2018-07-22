@@ -6,8 +6,6 @@ import "../lib/string.extensions"
 import { Direction, toEndpointName } from "./Common";
 
 export class WtfElement extends AbstractHtmlElement implements IPlumbable {
-    private initialHtml: string;
-
     public top = "";
     public left = "";
 
@@ -19,6 +17,34 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
 
     connectedCallback() {
         this.populateProperties();
+
+        const initialHtml = this.innerHTML;
+
+        this.innerHTML = /*html*/`
+        <style>
+            rect {
+                fill: lightgray;
+                stroke: black;
+                stroke-width: 2px;
+            }
+            .wtf-foreign-object-wrapper {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="100%" height="100%" />
+            <foreignObject x="0" y="0" width="100%" height="100%">
+                <div xmlns="http://www.w3.org/1999/xhtml" class="wtf-foreign-object-wrapper">
+                    ${initialHtml}
+                </div>
+            </foreignObject>
+        </svg>
+        `;
     }
 
     apply(instance: jsPlumbInstance) {
