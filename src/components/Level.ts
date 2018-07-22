@@ -2,20 +2,11 @@ import { AbstractHtmlElement } from "../lib/AbstractHtmlElement";
 import { IPlumbable } from "./Interfaces";
 import { jsPlumbInstance } from "jsplumb";
 
-import { Uuid } from "../lib/Uuid";
-
-declare var ShadyCSS: any;
-
 import "./Element";
 import { WtfElement } from "./Element";
 
 export class WtfLevel extends AbstractHtmlElement implements IPlumbable {
 
-    constructor() {
-        super();
-
-        console.log("ctor: Level");
-    }
     apply(instance: jsPlumbInstance) {
         var elements: WtfElement[] = [];
         for (let i = 0; i < this.children.length; i++) {

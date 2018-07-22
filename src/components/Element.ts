@@ -3,17 +3,10 @@ import { IPlumbable } from "./Interfaces";
 import { jsPlumbInstance } from "jsplumb";
 
 import "../lib/string.extensions"
-import { Direction, toEndpointName } from "./Common";
 
 export class WtfElement extends AbstractHtmlElement implements IPlumbable {
     public top = "";
     public left = "";
-
-    constructor() {
-        super();
-
-        console.log("ctor: Element");
-    }
 
     connectedCallback() {
         this.populateProperties();

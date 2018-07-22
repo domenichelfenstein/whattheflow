@@ -12,12 +12,6 @@ class WtfCanvas extends AbstractHtmlElement {
     public width: string;
     public height: string;
 
-    constructor() {
-        super();
-
-        console.log("ctor: Canvas");
-    }
-
     connectedCallback() {
         this.populateProperties();
 
