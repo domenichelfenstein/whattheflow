@@ -7,15 +7,26 @@ import "../lib/string.extensions"
 export class WtfElement extends AbstractHtmlElement implements IPlumbable {
     public top = "";
     public left = "";
+    public shape = "rectangle";
 
     connectedCallback() {
         this.populateProperties();
 
         const initialHtml = this.innerHTML;
 
+        var shape = "";
+        switch(this.shape) {
+            case "rectangle":
+                shape = /*html*/`<rect x="2%" y="2%" rx="5" ry="5" width="96%" height="96%" class="wtf-element-shape" />`;
+                break;
+            case "ellipse":
+                shape = /*html*/`<ellipse cx="50%" cy="50%" rx="48%" ry="48%" class="wtf-element-shape" />`;
+                break;
+        }
+
         this.innerHTML = /*html*/`
         <style>
-            rect {
+            .wtf-element-shape {
                 fill: lightgray;
                 stroke: black;
                 stroke-width: 2px;
@@ -30,7 +41,7 @@ export class WtfElement extends AbstractHtmlElement implements IPlumbable {
             }
         </style>
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0" y="0" rx="5" ry="5" width="100%" height="100%" />
+            ${shape}
             <foreignObject x="0" y="0" width="100%" height="100%">
                 <div xmlns="http://www.w3.org/1999/xhtml" class="wtf-foreign-object-wrapper">
                     ${initialHtml}

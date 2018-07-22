@@ -18,10 +18,10 @@
         transition: box-shadow 0.15s ease-in;
         width: 80px;
         height: 30px;
-        box-shadow: 2px 2px 19px #aaa;
+        /* box-shadow: 2px 2px 19px #aaa; */
     }
 
-    wtf-element rect {
+    wtf-element .wtf-element-shape {
         stroke: #346789;
         fill: lightcyan;
     }
@@ -29,10 +29,10 @@
     wtf-canvas wtf-level wtf-element[draggable="true"] {
         cursor: pointer;
     }
-    wtf-canvas wtf-level wtf-element[draggable="true"]:hover {
+    /* wtf-canvas wtf-level wtf-element[draggable="true"]:hover {
         box-shadow: 2px 2px 19px #777;
-    }
-    wtf-canvas wtf-level wtf-element[draggable="true"]:hover rect {
+    } */
+    wtf-canvas wtf-level wtf-element[draggable="true"]:hover .wtf-element-shape {
         fill: cyan;
     }
     </style>
@@ -52,7 +52,7 @@
             <wtf-element id="acronym2">XYZ</wtf-element>
         </wtf-level>
         <wtf-level>
-            <wtf-element id="janeDoe" draggable="true">Jane Doe</wtf-element>
+            <wtf-element shape="ellipse" id="janeDoe" draggable="true">Jane Doe</wtf-element>
         </wtf-level>
 
         <wtf-connection from="company" source="bottom" to="accounting" target="top"></wtf-connection>
