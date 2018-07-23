@@ -67,7 +67,10 @@ class WtfCanvas extends AbstractHtmlElement {
                     this.zoom = WtfCanvas.minZoom;
                 }
                 const zoom = this.zoom / 100;
+                const x = parseInt((e.layerX / parseInt(this.width) * 100) + "");
+                const y = parseInt((e.layerY / parseInt(this.height) * 100) + "");
                 container.style.transform = `scale(${zoom})`;
+                container.style.transformOrigin = `${x}% ${y}%`;
                 this.jsPlumb["setZoom"](zoom);
             });
         }
