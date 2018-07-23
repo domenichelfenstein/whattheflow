@@ -29,14 +29,6 @@ class WtfCanvas extends AbstractHtmlElement {
 
         const instance = jsPlumb.getInstance({
             DragOptions: { cursor: 'pointer', zIndex: 2000 },
-            ConnectionOverlays: [
-                ["Arrow", {
-                    location: 1,
-                    visible: true,
-                    width: 11,
-                    length: 11
-                }]
-            ],
             Container: this
         });
 
@@ -49,6 +41,16 @@ class WtfCanvas extends AbstractHtmlElement {
     }
     getCss() {
         return `
+            .jtk-overlay {
+                font-family: "Arial", sans-serif;
+                font-size: .8em;
+                background: white;
+                padding: 2px;
+                border-radius: 3px;
+            }
+            wtf-connection {
+                display: none;
+            }
             wtf-level {
                 display: flex;
                 justify-content: center;

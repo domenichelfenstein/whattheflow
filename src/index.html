@@ -35,6 +35,7 @@
 </head>
 
 <body>
+    <h1>Organization Chart</h1>
     <wtf-canvas id="mycanvas" width="680" height="250">
         <wtf-level>
             <wtf-element id="company">Company</wtf-element>
@@ -58,7 +59,7 @@
         <wtf-connection connector="flowchart" from="company" source="bottom" to="fieldService" target="top"></wtf-connection>
         <wtf-connection connector="flowchart" from="company" source="bottom" to="acronym2" target="top"></wtf-connection>
 
-        <wtf-connection connector="flowchart" from="subcompany" source="bottom" to="janeDoe" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="subcompany" source="bottom" to="janeDoe" target="top">Supervisor</wtf-connection>
     </wtf-canvas>
     <script src="bundle.js"></script>
 </body>

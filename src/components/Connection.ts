@@ -15,6 +15,10 @@ export class WtfConnection extends AbstractHtmlElement implements IPlumbable {
     public connector: ConnectorType = "straight";
     // public editable = false;
 
+    connectedCallback() {
+        this.populateProperties();
+    }
+
     apply(instance: jsPlumbInstance) {
         instance.connect(<any>{
             source: this.from,
@@ -26,8 +30,21 @@ export class WtfConnection extends AbstractHtmlElement implements IPlumbable {
             hoverPaintStyle: WtfConnection.endpointHoverStyle,
             connector: this.getConnector(),
             connectorStyle: WtfConnection.connectorPaintStyle,
-            connectorHoverStyle: WtfConnection.connectorHoverStyle
+            connectorHoverStyle: WtfConnection.connectorHoverStyle,
+            overlays: this.getOverlays()
         });
+    }
+
+    private getOverlays() {
+        let overlays: any[] =  [
+            [ "Arrow", {width :11, length: 11, location: 1}],
+          ];
+        
+        if(this.innerText != "") {
+            overlays.push(
+                [ "Label", { label: this.innerText }])
+        }
+        return overlays;
     }
 
     private getConnector() {
@@ -80,14 +97,6 @@ export class WtfConnection extends AbstractHtmlElement implements IPlumbable {
         fill: "#216477",
         stroke: "#216477"
     };
-
-    private static fromConnectorToString(ct: ConnectorType) {
-        return ct
-            .replaceAll("-", " ")
-            .split(" ")
-            .select(x => x.capitalizeFirstChar())
-            .join();
-    }
 }
 
 window.customElements.define('wtf-connection', WtfConnection);
