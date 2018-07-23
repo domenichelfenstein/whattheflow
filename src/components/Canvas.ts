@@ -1,5 +1,5 @@
 import { AbstractHtmlElement } from "../lib/AbstractHtmlElement";
-import { jsPlumb } from "jsplumb";
+import { jsPlumb, jsPlumbInstance } from "jsplumb";
 
 import "./Element";
 import "./Connection";
@@ -7,40 +7,80 @@ import "./Level";
 import { IPlumbable } from "./Interfaces";
 
 class WtfCanvas extends AbstractHtmlElement {
-    private initialHtml: string;
-
     public width: string;
     public height: string;
+    public zoomable = false;
+    public zoom = 100;
+    public zoomFactor = 3;
+
+    private static minZoom = 25;
+    private static maxZoom = 400;
+
+    private jsPlumb: jsPlumbInstance;
 
     connectedCallback() {
         this.populateProperties();
 
         this.style.width = `${this.width}px`;
         this.style.height = `${this.height}px`;
-        this.style.display = "flex";
-        this.style.flexDirection = "column";
-        this.style.overflow = "auto";
-        this.style.position = "relative";
-        this.style.padding = ".5em";
+        this.style.display = "block";
+        this.style.padding = "10px";
+        this.style.overflow = this.zoomable ? "auto" : "hidden";
+
+        const children = this.childNodes;
+        for (let i = 0; i < children.length; i++) {
+            const c = children[i];
+            this.removeChild(c);
+        }
+
+        const container = document.createElement("div");
+        container.classList.add("wtf-inner-canvas");
+        for (let i = 0; i < children.length; i++) {
+            const c = children[i];
+            container.appendChild(c);
+        }
+        this.appendChild(container);
 
         const style = document.createElement("style");
         style.innerHTML = this.getCss();
         this.appendChild(style);
 
-        const instance = jsPlumb.getInstance({
+        this.jsPlumb = jsPlumb.getInstance({
             DragOptions: { cursor: 'pointer', zIndex: 2000 },
-            Container: this
+            Container: container
         });
 
-        for (let i = 0; i < this.children.length; i++) {
-            const element = <IPlumbable><any>this.children[i];
+        for (let i = 0; i < container.children.length; i++) {
+            const element = <IPlumbable><any>container.children[i];
             if (element.apply) {
-                element.apply(instance);
+                element.apply(this.jsPlumb);
             }
+        }
+
+        if(this.zoomable) {
+            this.addEventListener('wheel', e => {
+                this.zoom += (e.deltaY * this.zoomFactor);
+                if(this.zoom > WtfCanvas.maxZoom) {
+                    this.zoom = WtfCanvas.maxZoom;
+                }
+                if(this.zoom < WtfCanvas.minZoom) {
+                    this.zoom = WtfCanvas.minZoom;
+                }
+                const zoom = this.zoom / 100;
+                container.style.transform = `scale(${zoom})`;
+                this.jsPlumb["setZoom"](zoom);
+            });
         }
     }
     getCss() {
         return `
+            .wtf-inner-canvas {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                position: relative;
+            }
             .jtk-overlay {
                 font-family: "Arial", sans-serif;
                 font-size: .8em;
