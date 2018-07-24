@@ -11,7 +11,7 @@ class WtfCanvas extends AbstractHtmlElement_1.AbstractHtmlElement {
         super(...arguments);
         this.zoomable = false;
         this.zoom = 100;
-        this.zoomFactor = 3;
+        this.zoomFactor = 1.2;
     }
     connectedCallback() {
         this.populateProperties();
@@ -20,16 +20,12 @@ class WtfCanvas extends AbstractHtmlElement_1.AbstractHtmlElement {
         this.style.display = "block";
         this.style.padding = "10px";
         this.style.overflow = this.zoomable ? "auto" : "hidden";
-        const children = this.childNodes;
-        for (let i = 0; i < children.length; i++) {
-            const c = children[i];
-            this.removeChild(c);
-        }
         const container = document.createElement("div");
         container.classList.add("wtf-inner-canvas");
-        for (let i = 0; i < children.length; i++) {
-            const c = children[i];
-            container.appendChild(c);
+        const parts = this.querySelectorAll("wtf-level, wtf-connection");
+        for (let i = 0; i < parts.length; i++) {
+            const part = parts[i];
+            container.appendChild(part);
         }
         this.appendChild(container);
         const style = document.createElement("style");
@@ -39,8 +35,8 @@ class WtfCanvas extends AbstractHtmlElement_1.AbstractHtmlElement {
             DragOptions: { cursor: 'pointer', zIndex: 2000 },
             Container: container
         });
-        for (let i = 0; i < container.children.length; i++) {
-            const element = container.children[i];
+        for (let i = 0; i < parts.length; i++) {
+            const element = parts[i];
             if (element.apply) {
                 element.apply(this.jsPlumb);
             }
