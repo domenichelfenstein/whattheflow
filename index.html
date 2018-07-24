@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My first experiment</title>
+    <script src="./node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce.js"></script>
+    <style>
+    wtf-canvas {
+        border: 2px solid lightgray;
+        border-radius: 5px;
+    }
+    wtf-canvas wtf-level wtf-element {
+        font-size: .7em;
+        opacity: .8;
+        font-family: helvetica, sans-serif;
+        transition: box-shadow 0.15s ease-in;
+        width: 80px;
+        height: 30px;
+    }
+
+    wtf-element .wtf-element-shape {
+        stroke: #346789;
+        fill: lightcyan;
+    }
+
+    wtf-canvas wtf-level wtf-element[draggable="true"] {
+        cursor: pointer;
+    }
+    wtf-canvas wtf-level wtf-element[draggable="true"]:hover .wtf-element-shape {
+        fill: cyan;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>Organization Chart</h1>
+    <wtf-canvas id="mycanvas" width="680" height="250" zoomable="true">
+        <wtf-level>
+            <wtf-element id="company">Company</wtf-element>
+        </wtf-level>
+        <wtf-level>
+            <wtf-element id="accounting">Accounting</wtf-element>
+            <wtf-element id="inhouseSales">in-house Sales</wtf-element>
+            <wtf-element shape="ellipse" id="subcompany">Sub Company</wtf-element>
+            <wtf-element id="acronym"><strong>A + B</strong><div>John Doe</div></wtf-element>
+            <wtf-element id="fieldService">Field Service</wtf-element>
+            <wtf-element id="acronym2">XYZ</wtf-element>
+        </wtf-level>
+        <wtf-level>
+            <wtf-element shape="diamond" id="janeDoe" draggable="true">Jane Doe</wtf-element>
+        </wtf-level>
+
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="accounting" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="inhouseSales" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="subcompany" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="acronym" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="fieldService" target="top"></wtf-connection>
+        <wtf-connection connector="flowchart" from="company" source="bottom" to="acronym2" target="top"></wtf-connection>
+
+        <wtf-connection connector="flowchart" from="subcompany" source="bottom" to="janeDoe" target="top">Supervisor</wtf-connection>
+    </wtf-canvas>
+    <script src="bundle.js"></script>
+</body>
+
+</html>
