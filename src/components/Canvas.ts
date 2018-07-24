@@ -11,7 +11,7 @@ class WtfCanvas extends AbstractHtmlElement {
     public height: string;
     public zoomable = false;
     public zoom = 100;
-    public zoomFactor = 3;
+    public zoomFactor = 1.2;
 
     private static minZoom = 25;
     private static maxZoom = 400;
@@ -27,17 +27,13 @@ class WtfCanvas extends AbstractHtmlElement {
         this.style.padding = "10px";
         this.style.overflow = this.zoomable ? "auto" : "hidden";
 
-        const children = this.childNodes;
-        for (let i = 0; i < children.length; i++) {
-            const c = children[i];
-            this.removeChild(c);
-        }
-
         const container = document.createElement("div");
         container.classList.add("wtf-inner-canvas");
-        for (let i = 0; i < children.length; i++) {
-            const c = children[i];
-            container.appendChild(c);
+
+        const parts = this.querySelectorAll("wtf-level, wtf-connection");
+        for (let i = 0; i < parts.length; i++) {
+            const part = parts[i];
+            container.appendChild(part);
         }
         this.appendChild(container);
 
@@ -50,8 +46,8 @@ class WtfCanvas extends AbstractHtmlElement {
             Container: container
         });
 
-        for (let i = 0; i < container.children.length; i++) {
-            const element = <IPlumbable><any>container.children[i];
+        for (let i = 0; i < parts.length; i++) {
+            const element = <IPlumbable><any>parts[i];
             if (element.apply) {
                 element.apply(this.jsPlumb);
             }
