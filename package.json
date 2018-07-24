@@ -1,13 +1,18 @@
 {
 	"name": "whattheflow",
+	"homepage": "https://domenichelfenstein.github.io/whattheflow",
 	"version": "1.0.0",
 	"scripts": {
 		"clear": "node ./node_modules/rimraf/bin.js ./dist/ && node ./node_modules/rimraf/bin.js ./build/",
-		"prepare": "node ./node_modules/copyfiles/copyfiles -e \"src/**/*.ts\" -u 1 \"src/**/*\" dist",
+		"copy:lib": "node ./node_modules/copyfiles/copyfiles -f \"node_modules/@webcomponents/webcomponentsjs/bundles/*.js\" \"dist/lib\"",
+		"copy:demo": "node ./node_modules/copyfiles/copyfiles -u 1 \"demo/**/*.*\" dist",
+		"copy": "npm run copy:lib && npm run copy:demo",
 		"transpile": "./node_modules/.bin/tsc --p ./configs/tsconfig.json",
-		"prebuild": "npm run clear && npm run prepare && npm run transpile",
-		"build": "npm run prebuild && node ./node_modules/browserify/bin/cmd.js -e ./build/index.js -o ./dist/bundle.js",
-		"start": "npm run build && node ./node_modules/lite-server/bin/lite-server -c ./configs/lite-server.json"
+		"bundle": "node ./node_modules/browserify/bin/cmd.js -e ./build/index.js -o ./dist/bundle.js",
+		"build": "npm run clear && npm run copy && npm run transpile && npm run bundle",
+		"serve": "node ./node_modules/lite-server/bin/lite-server -c ./configs/lite-server.json",
+		"start": "npm run clear && npm run copy && npm run transpile && npm run bundle && npm run serve",
+		"deploy": "npm run build && gh-pages -d dist"
 	},
 	"author": "Domenic Helfenstein",
 	"license": "MIT",
@@ -20,6 +25,7 @@
 		"browserify": "16.2.2",
 		"copyfiles": "2.0.0",
 		"lite-server": "2.4.0",
-		"rimraf": "2.6.2"
+		"rimraf": "2.6.2",
+		"gh-pages": "1.2.0"
 	}
 }

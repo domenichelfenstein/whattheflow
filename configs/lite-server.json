@@ -1,8 +1,8 @@
 {
     "port": 8000,
+    "open": false,
     "files": [
-        "./dist/**/*.{html,css,js}",
-        "./node_modules/**/*.js"
+        "./dist/**/*.{html,css,js}"
     ],
     "server": {
         "baseDir": "./dist",
